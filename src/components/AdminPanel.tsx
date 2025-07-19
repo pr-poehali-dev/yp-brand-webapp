@@ -7,6 +7,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
+import TelegramAdmin from './TelegramAdmin';
+import TelegramBot from './TelegramBot';
 
 interface AdminPanelProps {
   onClose: () => void;
@@ -14,7 +16,7 @@ interface AdminPanelProps {
 }
 
 const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, onUpdateStore }) => {
-  const [activeSection, setActiveSection] = useState('products');
+  const [activeSection, setActiveSection] = useState('telegram');
   const [newProduct, setNewProduct] = useState({
     name: '',
     price: '',
@@ -90,6 +92,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, onUpdateStore }) => {
   };
 
   const adminSections = [
+    { id: 'telegram', icon: 'Bot', label: 'Telegram' },
     { id: 'products', icon: 'Package', label: 'Товары' },
     { id: 'store', icon: 'Store', label: 'Магазин' },
     { id: 'giveaways', icon: 'Gift', label: 'Розыгрыши' },
@@ -303,6 +306,17 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onClose, onUpdateStore }) => {
                   </Button>
                 </CardContent>
               </Card>
+            )}
+
+            {/* Telegram управление */}
+            {activeSection === 'telegram' && (
+              <div className="space-y-4">
+                <TelegramAdmin onClose={() => setActiveSection('products')} />
+                <TelegramBot 
+                  botToken="7846630115:AAH2uGX6Hdv-ImcEMiM6UvdxRWynHCcQnjA"
+                  onUpdate={(data) => console.log('Bot update:', data)}
+                />
+              </div>
             )}
 
             {/* Розыгрыши */}
